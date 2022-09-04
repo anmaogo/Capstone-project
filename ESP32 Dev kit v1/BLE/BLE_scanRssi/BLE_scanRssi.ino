@@ -8,17 +8,22 @@
 #include <BLEScan.h>
 #include <BLEAdvertisedDevice.h>
 
-int scanTime = 5; //In seconds
+int scanTime = 2; //In seconds
 BLEScan* pBLEScan;
+String mac = "0c:b8:15:c2:34:6a";
 
 class MyAdvertisedDeviceCallbacks: public BLEAdvertisedDeviceCallbacks {
     void onResult(BLEAdvertisedDevice advertisedDevice) {
-      Serial.printf("Advertised Device: %s", advertisedDevice.toString().c_str());
-      
-      if (advertisedDevice.haveRSSI()){
-        Serial.printf("Rssi: %d \n", (int)advertisedDevice.getRSSI());
-      }
-      else Serial.printf("\n");
+      if(advertisedDevice.haveName()== true && advertisedDevice.getName().c_str()[1]=='o' ){
+        //Serial.printf("Advertised Device: %s", advertisedDevice.toString().c_str());
+        if (advertisedDevice.haveRSSI()){
+          //Serial.printf("Rssi: %d \n", (int)advertisedDevice.getRSSI());
+          Serial.printf("Rssi: %d \n", (int)advertisedDevice.getRSSI());
+        
+          }
+          else Serial.printf("\n");
+        
+        }     
   
     }
 };
