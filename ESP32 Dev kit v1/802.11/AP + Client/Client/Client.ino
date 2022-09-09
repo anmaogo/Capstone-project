@@ -1,22 +1,31 @@
 #include <WiFi.h>
-#include <HTTPClient.h>
+#include "ESPAsyncWebServer.h" //Para peticiones HTTP
+
 
 const char* ssid = "monitoreoBovino";
 const char* password = "monitoreoBovino123";
 
-//Your IP address or domain name with URL path
-const char* serverNameHelloWorld = "http://192.168.4.1/data";
+IPAddress ip(192,168,1,10);     
+IPAddress gateway(192, 168, 1, 1);   
+IPAddress subnet(255,255,255,0);   
 
 
-unsigned long previousMillis = 0;
-const long interval = 5000; 
-String mensaje;
+// Create AsyncWebServer object on port 80
+AsyncWebServer server(80);
+
+
+String hellowWorld() {
+  return String("Mensaje enviado desde nodo 1");
+}
+
 
 void setup() {
   Serial.begin(115200);
-    
+
+  WiFi.mode(WIFI_STA);
+  WiFi.config(ip, gateway, subnet);
   WiFi.begin(ssid, password);
-  Serial.println("Connecting");
+  Serial.println("Conectando");
   while(WiFi.status() != WL_CONNECTED) { 
     delay(500);
     Serial.print(".");
@@ -24,50 +33,16 @@ void setup() {
   Serial.println("");
   Serial.print("Connected to WiFi network with IP Address: ");
   Serial.println(WiFi.localIP());
+
+
+    server.on("/data", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send_P(200, "text/plain", hellowWorld().c_str());
+  });
+
+  
+  server.begin();
 }
 
 void loop() {
-  unsigned long currentMillis = millis();
-  
-  if(currentMillis - previousMillis >= interval) {
-     // Check WiFi connection status
-    if(WiFi.status()== WL_CONNECTED ){ 
-      mensaje = httpGETRequest(serverNameHelloWorld);
 
-      Serial.println(mensaje);
-
-      // save the last HTTP GET Request
-      previousMillis = currentMillis;
-    }
-    else {
-      Serial.println("WiFi Disconnected");
-    }
-  }
-}
-
-String httpGETRequest(const char* serverName) {
-  WiFiClient client;
-  HTTPClient http;
-    
-  // Your Domain name with URL path or IP address with path
-  http.begin(client, serverName);
-  
-  // Send HTTP POST request
-  int httpResponseCode = http.GET();
-  
-  String payload = "--"; 
-  
-  if (httpResponseCode>0) {
-    Serial.print("HTTP Response code: ");
-    Serial.println(httpResponseCode);
-    payload = http.getString();
-  }
-  else {
-    Serial.print("Error code: ");
-    Serial.println(httpResponseCode);
-  }
-  // Free resources
-  http.end();
-
-  return payload;
 }
