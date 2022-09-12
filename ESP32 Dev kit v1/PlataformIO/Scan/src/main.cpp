@@ -11,7 +11,20 @@ BLEScan* pBLEScan;
 
 class MyAdvertisedDeviceCallbacks: public BLEAdvertisedDeviceCallbacks {
     void onResult(BLEAdvertisedDevice advertisedDevice) {
-      Serial.printf("Advertised Device: %s \n", advertisedDevice.toString().c_str());
+      //Serial.printf("Advertised Device: %s \n", advertisedDevice.getAddress().toString().c_str());
+      
+
+      if(advertisedDevice.getAddress().toString() == "30:c6:f7:2f:b1:de"){
+        if (advertisedDevice.haveRSSI()){
+          //Serial.printf("Rssi: %d \n", (int)advertisedDevice.getRSSI());          
+          Serial.println("Se encontró nodo");      
+          Serial.printf("Nodo: %s Rssi: %d \n", advertisedDevice.getName().c_str() , (int)advertisedDevice.getRSSI());
+        
+          }
+        //Serial.printf("Advertised Device: %s \n", advertisedDevice.toString().c_str());
+      }
+
+
     }
 };
 
@@ -30,9 +43,9 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   BLEScanResults foundDevices = pBLEScan->start(scanTime, false);
-  Serial.print("Devices found: ");
-  Serial.println(foundDevices.getCount());
-  Serial.println("Scan done!");
-  pBLEScan->clearResults();   // delete results fromBLEScan buffer to release memory
+  //Serial.print("Devices found: ");
+  //Serial.println(foundDevices.getCount());
+  //Serial.println("Scan done!");
+  //pBLEScan->clearResults();   // delete results fromBLEScan buffer to release memory
   delay(2000);
 }
