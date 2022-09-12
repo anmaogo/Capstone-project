@@ -5,21 +5,25 @@
 #include <BLEAdvertisedDevice.h>
 #include "ESPAsyncWebServer.h"
 
-IPAddress ip(192,168,1,10);     
+IPAddress ip(192,168,1,20);     
 IPAddress gateway(192, 168, 1, 1);   
 IPAddress subnet(255,255,255,0);  
 
 const char* ssid = "monitoreoBovino";
 const char* password = "monitoreoBovino123";
 
-int scanTime = 5; //In seconds
+int scanTime = 2; //In seconds
 BLEScan* pBLEScan;
 
 AsyncWebServer server(80);
 
+// mensaje
+String id = "AnclaDos";
+String data;
 
-String hellowWorld() {
-  return String("Mensaje enviado desde nodo 1");
+String mensaje() {
+   
+  return "Hola mundo";
 }
 
 
@@ -29,7 +33,7 @@ String hellowWorld() {
 
 void startWebServer() {
  server.on("/data", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send_P(200, "text/plain", hellowWorld().c_str());
+    request->send_P(200, "text/plain", data.c_str());
   });
   server.begin();
 }
@@ -77,7 +81,28 @@ void setupBLE()
 
 class MyAdvertisedDeviceCallbacks: public BLEAdvertisedDeviceCallbacks {
     void onResult(BLEAdvertisedDevice advertisedDevice) {
-      Serial.printf("Advertised Device: %s \n", advertisedDevice.toString().c_str());
+      
+      //Serial.printf("Advertised Device: %s \n", advertisedDevice.getAddress().toString().c_str());
+      String anchorName;
+      signed int rssi;
+      if(advertisedDevice.getAddress().toString() == "30:c6:f7:2f:b1:de"){
+        if (advertisedDevice.haveRSSI()){
+          //Serial.printf("Rssi: %d \n", (int)advertisedDevice.getRSSI());          
+          Serial.println("Se encontró nodo");      
+          Serial.printf("Nodo: %s Rssi: %d \n", advertisedDevice.getName().c_str() , (int)advertisedDevice.getRSSI());
+
+          char buffer [5];        
+          anchorName = advertisedDevice.getName().c_str();
+          rssi = (int)advertisedDevice.getRSSI();
+          sprintf(buffer, "%d", rssi);
+          data =  id + ";"+ anchorName + ";" + buffer;
+           
+        
+          }
+        //Serial.printf("Advertised Device: %s \n", advertisedDevice.toString().c_str());
+      }
+
+
     }
 };
 
