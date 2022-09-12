@@ -1,7 +1,5 @@
-/*
-   Based on Neil Kolban example for IDF: https://github.com/nkolban/esp32-snippets/blob/master/cpp_utils/tests/BLE%20Tests/SampleScan.cpp
-   Ported to Arduino ESP32 by Evandro Copercini
-*/
+#include <Arduino.h>
+
 
 #include <BLEDevice.h>
 #include <BLEUtils.h>
@@ -10,24 +8,10 @@
 
 int scanTime = 5; //In seconds
 BLEScan* pBLEScan;
-String mac = "0c:b8:15:c2:34:6a";
-int contador;
 
 class MyAdvertisedDeviceCallbacks: public BLEAdvertisedDeviceCallbacks {
     void onResult(BLEAdvertisedDevice advertisedDevice) {
-      if(advertisedDevice.haveName()== true && advertisedDevice.getName().c_str()[1]=='o' ){
-        //Serial.printf("Advertised Device: %s", advertisedDevice.toString().c_str());
-        if (advertisedDevice.haveRSSI()){
-          //Serial.printf("Rssi: %d \n", (int)advertisedDevice.getRSSI());
-          contador++;
-          Serial.printf("Contador: %i \n", contador);
-          Serial.printf("Rssi: %d \n", (int)advertisedDevice.getRSSI());
-        
-          }
-          else Serial.printf("\n");
-        
-        }     
-  
+      Serial.printf("Advertised Device: %s \n", advertisedDevice.toString().c_str());
     }
 };
 
