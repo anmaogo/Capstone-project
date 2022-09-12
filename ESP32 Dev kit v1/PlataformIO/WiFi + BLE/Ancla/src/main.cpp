@@ -1,34 +1,20 @@
-/*
-   TRABAJO DE GRADO MAESTRÍA IOT
-   NODO ANCLA
-
-*/
-
-#include <Arduino.h>
-
-// Libraries space
-
 #include <WiFi.h>
-#include "ESPAsyncWebServer.h" //Para peticiones HTTP
-
-
-
-int count1 = 0;
-int count2 = 0;
-
-// Tasks handle space
-
-TaskHandle_t task1_handle = NULL; 
-
-const char* ssid = "monitoreoBovino";
-const char* password = "monitoreoBovino123";
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEScan.h>
+#include <BLEAdvertisedDevice.h>
+#include "ESPAsyncWebServer.h"
 
 IPAddress ip(192,168,1,10);     
 IPAddress gateway(192, 168, 1, 1);   
 IPAddress subnet(255,255,255,0);  
 
+const char* ssid = "monitoreoBovino";
+const char* password = "monitoreoBovino123";
 
-// Create AsyncWebServer object on port 80
+int scanTime = 5; //In seconds
+BLEScan* pBLEScan;
+
 AsyncWebServer server(80);
 
 
@@ -36,9 +22,10 @@ String hellowWorld() {
   return String("Mensaje enviado desde nodo 1");
 }
 
-// ----------------------------------------------------
-//  Void 1: Web server initialization
-// ----------------------------------------------------
+
+//--------------------------------------------------------------------------------------------------
+// Star Web Services
+//----------------------------------------------------------------------------------------------
 
 void startWebServer() {
  server.on("/data", HTTP_GET, [](AsyncWebServerRequest *request){
@@ -47,83 +34,91 @@ void startWebServer() {
   server.begin();
 }
 
-// ----------------------------------------------------
-//  Void 2: Set Up WiFi Services
-// ----------------------------------------------------
-
-void setUpWiFiServices() {
-
+//--------------------------------------------------------------------------------------------------
+// Set Up Wifi 
+//--------------------------------------------------------------------------------------------------
+void setupWIFI()
+{
   WiFi.mode(WIFI_STA);
   WiFi.config(ip, gateway, subnet);
   WiFi.begin(ssid, password);
   Serial.println("Conectando");
-  while(WiFi.status() != WL_CONNECTED) { 
+    while(WiFi.status() != WL_CONNECTED) { 
     delay(500);
     Serial.print(".");
   }
   Serial.println("");
   Serial.print("Connected to WiFi network with IP Address: ");
   Serial.println(WiFi.localIP());  
-  
-  startWebServer();
-  
 }
 
-// ----------------------------------------------------
-//  Task 1: 
-// ----------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+// Task: BLE Scan 
+//--------------------------------------------------------------------------------------------------
 
-void task1(void * parameters){
-  for(;;){
-    Serial.print("Task 1 counter: ");
-    Serial.println(count1++);
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
+void bleScanResult(){
+  BLEScanResults foundDevices = pBLEScan->start(scanTime, false);
+  Serial.print("Devices found: ");
+  Serial.println(foundDevices.getCount());
+  Serial.println("Scan done!");
+  pBLEScan->clearResults();   // delete results fromBLEScan buffer to release memory
+  delay(2000);  
 
-      
   }
-}
-
-// ----------------------------------------------------
-//  Task 1: 
-// ----------------------------------------------------
-
-void task2(void * parameters){
-  for(;;){
-    Serial.print("Task 2 counter: ");
-    Serial.println(count2++);
-    vTaskDelay(1000 / portTICK_PERIOD_MS);    
-  }
-}
 
 
-void setup() {
-  // put your setup code here, to run once:
 
-  setUpWiFiServices();
+//--------------------------------------------------------------------------------------------------
+// BLE SET UP
+//--------------------------------------------------------------------------------------------------
+void setupBLE()
+{
+
+
+class MyAdvertisedDeviceCallbacks: public BLEAdvertisedDeviceCallbacks {
+    void onResult(BLEAdvertisedDevice advertisedDevice) {
+      Serial.printf("Advertised Device: %s \n", advertisedDevice.toString().c_str());
+    }
+};
+
+
+  Serial.println("Scanning...");
+
+  BLEDevice::init("");
+  pBLEScan = BLEDevice::getScan(); //create new scan
+  pBLEScan->setAdvertisedDeviceCallbacks(new MyAdvertisedDeviceCallbacks());
+  pBLEScan->setActiveScan(true); //active scan uses more power, but get results faster
+  pBLEScan->setInterval(100);
+  pBLEScan->setWindow(99);  // less or equal setInterval 
+
   
+}
+
+
+//--------------------------------------------------------------------------------------------------
+// Void Set up: Set up BLE & WiFi 
+//--------------------------------------------------------------------------------------------------
+void setup()
+{
   Serial.begin(115200);
-  xTaskCreate(
-    task1, //Fuction name
-    "Task 1", //Task name
-    1000, //Stack size
-    NULL, //Task parameters
-    1, //Task priority
-    NULL //task handle
-  );
 
-  xTaskCreate(
-    task2, //Fuction name
-    "Task 2", //Task name
-    1000, //Stack size
-    NULL, //Task parameters
-    1, //Task priority
-    NULL //task handle
-  );
+  setupWIFI();    
+  setupBLE();
 }
 
-
-
+//--------------------------------------------------------------------------------------------------
+// Loop: Scan BLE
+//--------------------------------------------------------------------------------------------------
 void loop() {
-  // put your main code here, to run repeatedly:
+
+  bleScanResult();
+
+  if(WiFi.status() == WL_CONNECTED){
+    startWebServer();
+
+  }else{
+    setupWIFI(); 
+  }
+
 
 }
