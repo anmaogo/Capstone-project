@@ -1,0 +1,179 @@
+ets Jun  8 2016 00:22:57
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:1184
+load:0x40078000,len:13132
+load:0x40080400,len:3036
+entry 0x400805e4
+LoRa Receiver
+LoRa Receiver
+Received packet 'hello 598' with RSSI -98
+Received packet 'hello 599' with RSSI -98
+Received packet 'hello 600' with RSSI -99
+Received packet 'hello 601' with RSSI -99
+Received packet 'hello 602' with RSSI -99
+Received packet 'hello 603' with RSSI -99
+Received packet 'hello 604' with RSSI -99
+Received packet 'hello 605' with RSSI -97
+Received packet 'hello 606' with RSSI -98
+Received packet 'hello 607' with RSSI -98
+Received packet 'hello 608' with RSSI -98
+Received packet 'hello 609' with RSSI -98
+Received packet 'hello 610' with RSSI -98
+Received packet 'hello 611' with RSSI -98
+Received packet 'hello 612' with RSSI -98
+Received packet 'hello 613' with RSSI -99
+Received packet 'hello 614' with RSSI -98
+Received packet 'hello 615' with RSSI -99
+Received packet 'hello 616' with RSSI -98
+Received packet 'hello 617' with RSSI -98
+Received packet 'hello 618' with RSSI -96
+Received packet 'hello 619' with RSSI -98
+Received packet 'hello 620' with RSSI -98
+Received packet 'hello 621' with RSSI -97
+Received packet 'hello 622' with RSSI -98
+Received packet 'hello 623' with RSSI -98
+Received packet 'hello 624' with RSSI -98
+Received packet 'hello 625' with RSSI -98
+Received packet 'hello 626' with RSSI -98
+Received packet 'hello 627' with RSSI -100
+Received packet 'hello 628' with RSSI -97
+Received packet 'hello 629' with RSSI -96
+Received packet 'hello 630' with RSSI -97
+Received packet 'hello 631' with RSSI -98
+Received packet 'hello 632' with RSSI -99
+Received packet 'hello 633' with RSSI -99
+Received packet 'hello 634' with RSSI -101
+Received packet 'hello 635' with RSSI -99
+Received packet 'hello 636' with RSSI -100
+Received packet 'hello 637' with RSSI -100
+Received packet 'hello 638' with RSSI -100
+Received packet 'hello 639' with RSSI -100
+Received packet 'hello 640' with RSSI -100
+Received packet 'hello 641' with RSSI -100
+Received packet 'hello 642' with RSSI -100
+Received packet 'hello 643' with RSSI -99
+Received packet 'hello 644' with RSSI -101
+Received packet 'hello 645' with RSSI -99
+Received packet 'hello 646' with RSSI -102
+Received packet 'hello 647' with RSSI -99
+Received packet 'hello 648' with RSSI -98
+Received packet 'hello 649' with RSSI -97
+Received packet 'hello 650' with RSSI -97
+Received packet 'hello 651' with RSSI -97
+Received packet 'hello 652' with RSSI -95
+Received packet 'hello 653' with RSSI -97
+Received packet 'hello 654' with RSSI -97
+Received packet 'hello 655' with RSSI -97
+Received packet 'hello 656' with RSSI -97
+Received packet 'hello 657' with RSSI -98
+Received packet 'hello 658' with RSSI -97
+Received packet 'hello 659' with RSSI -97
+Received packet 'hello 660' with RSSI -97
+Received packet 'hello 661' with RSSI -97
+Received packet 'hello 662' with RSSI -97
+Received packet 'hello 663' with RSSI -98
+Received packet 'hello 664' with RSSI -97
+Received packet 'hello 665' with RSSI -97
+Received packet 'hello 666' with RSSI -97
+Received packet 'hello 667' with RSSI -97
+Received packet 'hello 668' with RSSI -97
+Received packet 'hello 669' with RSSI -97
+Received packet 'hello 670' with RSSI -97
+Received packet 'hello 671' with RSSI -97
+Received packet 'hello 672' with RSSI -97
+Received packet 'hello 673' with RSSI -97
+Received packet 'hello 674' with RSSI -97
+Received packet 'hello 675' with RSSI -97
+Received packet 'hello 676' with RSSI -97
+Received packet 'hello 677' with RSSI -97
+Received packet 'hello 678' with RSSI -97
+Received packet 'hello 679' with RSSI -97
+Received packet 'hello 680' with RSSI -96
+Received packet 'hello 681' with RSSI -97
+Received packet 'hello 682' with RSSI -97
+Received packet 'hello 683' with RSSI -97
+Received packet 'hello 684' with RSSI -97
+Received packet 'hello 685' with RSSI -97
+Received packet 'hello 686' with RSSI -97
+Received packet 'hello 687' with RSSI -96
+Received packet 'hello 688' with RSSI -97
+Received packet 'hello 689' with RSSI -97
+Received packet 'hello 690' with RSSI -97
+Received packet 'hello 691' with RSSI -97
+Received packet 'hello 692' with RSSI -97
+Received packet 'hello 693' with RSSI -97
+Received packet 'hello 694' with RSSI -97
+Received packet 'hello 695' with RSSI -96
+Received packet 'hello 696' with RSSI -97
+Received packet 'hello 697' with RSSI -96
+Received packet 'hello 698' with RSSI -97
+Received packet 'hello 699' with RSSI -96
+Received packet 'hello 700' with RSSI -97
+Received packet 'hello 701' with RSSI -96
+Received packet 'hello 702' with RSSI -96
+Received packet 'hello 703' with RSSI -97
+Received packet 'hello 704' with RSSI -96
+Received packet 'hello 705' with RSSI -97
+Received packet 'hello 706' with RSSI -96
+Received packet 'hello 707' with RSSI -95
+Received packet 'hello 708' with RSSI -96
+Received packet 'hello 709' with RSSI -95
+Received packet 'hello 710' with RSSI -95
+Received packet 'hello 711' with RSSI -95
+Received packet 'hello 712' with RSSI -95
+Received packet 'hello 713' with RSSI -95
+Received packet 'hello 714' with RSSI -94
+Received packet 'hello 715' with RSSI -95
+Received packet 'hello 716' with RSSI -95
+Received packet 'hello 717' with RSSI -95
+Received packet 'hello 718' with RSSI -95
+Received packet 'hello 719' with RSSI -95
+Received packet 'hello 720' with RSSI -95
+Received packet 'hello 721' with RSSI -95
+Received packet 'hello 722' with RSSI -95
+Received packet 'hello 723' with RSSI -95
+Received packet 'hello 724' with RSSI -95
+Received packet 'hello 725' with RSSI -95
+
+
