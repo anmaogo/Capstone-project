@@ -74,6 +74,10 @@ void loop() {
   if(currentMillis - previousMillis >= interval) {
     mensaje = httpGETRequest(serverNameHelloWorld);
     Serial.println(mensaje);
+
+    //MENSAJES EN JSON
+    
+    JSONVar myObject = JSON.parse(mensaje);
     // save the last HTTP GET Request
     previousMillis = currentMillis;
     // Check WiFi connection status
