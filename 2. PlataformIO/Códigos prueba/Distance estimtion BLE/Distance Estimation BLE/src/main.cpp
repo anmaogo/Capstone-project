@@ -14,8 +14,8 @@ BLEScan* pBLEScan;
 	 * phone at a known distance (2m, 3m, 5m, 10m) 2.average about 10 RSSI
 	 * values for each of these distances, Set distance_factor so that the
 	 * calculated distance approaches the actual distances, e.g. at 5m. */
-	static constexpr float reference_power  = -50; //rssi reffrence 
-	static constexpr float distance_factor = 3.5;
+	static constexpr float reference_power  = -63.587; //rssi reffrence 
+	static constexpr float distance_factor = 1.584;
 
   static float get_distance(const int8_t rssi)
 	{ return pow(10, (reference_power - rssi)/(10*distance_factor)); }
