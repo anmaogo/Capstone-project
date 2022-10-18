@@ -27,6 +27,18 @@ String mensaje() {
 }
 
 
+	/* dBm to distance parameters; How to update distance_factor 1.place the
+	 * phone at a known distance (2m, 3m, 5m, 10m) 2.average about 10 RSSI
+	 * values for each of these distances, Set distance_factor so that the
+	 * calculated distance approaches the actual distances, e.g. at 5m. */
+	static constexpr float reference_power  = -50; //rssi reffrence 
+	static constexpr float distance_factor = 3.5;
+
+  static float get_distance(const int8_t rssi)
+	{ return pow(10, (reference_power - rssi)/(10*distance_factor)); }
+
+
+
 //--------------------------------------------------------------------------------------------------
 // Star Web Services
 //----------------------------------------------------------------------------------------------
@@ -90,16 +102,18 @@ class MyAdvertisedDeviceCallbacks: public BLEAdvertisedDeviceCallbacks {
           //Serial.printf("Rssi: %d \n", (int)advertisedDevice.getRSSI());          
           Serial.println("Se encontró nodo");      
           Serial.printf("Nodo: %s Rssi: %d \n", advertisedDevice.getName().c_str() , (int)advertisedDevice.getRSSI());
-
+          
           char buffer [5];        
           anchorName = advertisedDevice.getName().c_str();
           rssi = (int)advertisedDevice.getRSSI();
           sprintf(buffer, "%d", rssi);
           data =  id + ";"+ anchorName + ";" + buffer;
+
+          Serial.printf("La distancia es: %f \n", get_distance((int)advertisedDevice.getRSSI()));  
            
         
           }
-        //Serial.printf("Advertised Device: %s \n", advertisedDevice.toString().c_str());
+        
       }
 
 

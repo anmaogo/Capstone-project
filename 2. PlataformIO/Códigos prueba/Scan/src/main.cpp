@@ -14,7 +14,7 @@ class MyAdvertisedDeviceCallbacks: public BLEAdvertisedDeviceCallbacks {
       //Serial.printf("Advertised Device: %s \n", advertisedDevice.getAddress().toString().c_str());
       
 
-      if(advertisedDevice.getAddress().toString() == "30:c6:f7:2f:b1:de"){
+      if(advertisedDevice.getAddress().toString() == "30:c6:f7:2f:b1:de"){ 
         if (advertisedDevice.haveRSSI()){
           //Serial.printf("Rssi: %d \n", (int)advertisedDevice.getRSSI());          
           Serial.println("Se encontró nodo");      
